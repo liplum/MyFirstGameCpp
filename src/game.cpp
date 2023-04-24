@@ -1,3 +1,7 @@
+//
+// Created by Liplum on 4/23/2023.
+//
+
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "cert-msc50-cpp"
 
@@ -6,27 +10,29 @@
 #include "entity.h"
 #include "ui.h"
 #include "calculate.h"
+#include "game.h"
 
-//
-// Created by Liplum on 4/23/2023.
-//
-int getChoice() {
-  int choice;
+using namespace std;
+
+ActionType getActionChoice() {
+  int choice = 0;
   cout << "Attack=1, Parry=2, Withdraw=3" << endl;
-  cout << "Your choice:";
-  cin >> choice;
-  return choice;
+  while (choice != Attack && choice != Parry && choice != Withdraw) {
+    cout << "Your choice:";
+    cin >> choice;
+  }
+  return static_cast<ActionType>(choice);
 }
 
 const int healthBarWidth = 15;
 
-void displayHealthBar(Fighter *fighter) {
-  cout << fighter->type->name << " HP:" << endl;
-  cout << "\t|" << createHealthBar(fighter->curHp, fighter->type->maxHp, healthBarWidth) << "| "
-       << static_cast<int>(fighter->curHp) << endl;
+void displayHealthBar(Fighter &fighter) {
+  cout << fighter.type->getName() << " HP:" << endl;
+  cout << "\t|" << createHealthBar(fighter.curHp, fighter.type->getMaxHp(), healthBarWidth) << "| "
+       << static_cast<int>(fighter.curHp) << endl;
 }
 
-void displayNewTurnBanner(Fighter *player, Fighter *enemy, int turn) {
+void displayNewTurnBanner(Fighter &player, Fighter &enemy, int turn) {
   clearScreen();
   printf("------------------------------------------------------------\n");
   cout << "[Turn " << turn << "]" << endl;

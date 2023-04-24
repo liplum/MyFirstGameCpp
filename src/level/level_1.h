@@ -6,9 +6,11 @@
 #ifndef LEVEL_1_H
 #define LEVEL_1_H
 
-extern const PlayerType playerLv1;
-extern const EnemyType enemySlime;
-
 BattleResult slimeBattle();
+
+class SlimeLevel : public GameLevel {
+
+  void startBattle(const BattleContext& ctx) override;
+};
 
 #endif //LEVEL_1_H

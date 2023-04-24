@@ -9,18 +9,21 @@
 #include "level_1.h"
 #include "../calculate.h"
 
-const Enemy enemySlime = {
-  .name = "Slime",
-  .maxHp = 120.0f,
-  .attack = 12.0f,
-  .armor = 2.0f,
-  .level = 1,
-  .attackPower = 100,
-};
+Enemy *createSlime() {
+  auto e = new Enemy;
+  e->name = "Slime";
+  e->maxHp = 120.0f;
+  e->attack = 12.0f;
+  e->armor = 2.0f;
+  e->level = 1;
+  e->expReward = 10;
+  return e;
+}
 
-BattleResult slimeBattle(Player *playerMeta) {
-  auto *player = playerMeta->create();
-  Enemy *enemy = createEnemy(&enemySlime);
+void SlimeLevel::startBattle(const BattleContext &ctx) {
+  auto enemySlime = *createSlime();
+  auto player = *ctx.player.create();
+  auto enemy = *enemySlime.create();
   int turn = 0;
   printf("Press Enter to start.");
   getchar();
@@ -32,7 +35,7 @@ BattleResult slimeBattle(Player *playerMeta) {
   printf("Start fighting!");
   getchar();
 
-  printf("Your Hp is %d. Slime's is %d.", (int) player->curHp, (int) enemy->curHp);
+  printf("Your Hp is %d. Slime's is %d.", (int) player.curHp, (int) enemy.curHp);
   getchar();
 
   while (true) {
@@ -43,10 +46,10 @@ BattleResult slimeBattle(Player *playerMeta) {
     switch (choice) {
       case Attack: {
         float playerCaused = calcDamageFor(player, enemy, player->type->attackPower);
-        enemy->curHp -= playerCaused;
+        enemy.curHp -= playerCaused;
         float slimeCaused = calcDamageFor(enemy, player, enemy->type->attackPower);
-        player->curHp -= slimeCaused;
-        if (enemy->curHp <= 0) { //Killed
+        player.curHp -= slimeCaused;
+        if (enemy.curHp <= 0) { //Killed
           printf("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
           printf("A critical strike is performed!\n");
           printf("Congratulations! You won the fight.\n");
@@ -105,4 +108,6 @@ BattleResult slimeBattle(Player *playerMeta) {
       }
     }
   }
+}
+
 }

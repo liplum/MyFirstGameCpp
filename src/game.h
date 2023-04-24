@@ -20,12 +20,22 @@ typedef enum {
   Withdraw = 3,
 } ActionType;
 
-int getChoice();
+ActionType getActionChoice();
 
 void displayHealthBar(Fighter *fighter);
 
-void displayNewTurnBanner(Fighter *player, Fighter *enemy, int turn);
+void displayNewTurnBanner(Fighter &player, Fighter &enemy, int turn);
 
 float calcDamage(int aLv, float aAttack, float aPower, float bArmor);
+
+class BattleContext{
+public:
+  Player& player;
+};
+
+class GameLevel {
+public:
+  virtual void startBattle(const BattleContext& ctx) = 0;
+};
 
 #endif //GAME_H
