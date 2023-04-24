@@ -6,16 +6,26 @@
 #ifndef GAME_H
 #define GAME_H
 
-#define ATTACK  1
-#define PARRY  2
-#define Withdraw  3
+typedef enum {
+  BattleWin,
+  BattleLoss,
+  BattleEscape,
+} BattleResult;
+
+extern const float escapeChance;
+
+typedef enum {
+  Attack = 1,
+  Parry = 2,
+  Withdraw = 3,
+} ActionType;
 
 int getChoice();
 
-void displayNewTurn(int turn, FighterObject *player, FighterObject *enemy);
+void displayHealthBar(Fighter *fighter);
 
-int waving(int value);
+void displayNewTurnBanner(Fighter *player, Fighter *enemy, int turn);
 
-float calcDamage(int aLv, float aAttack, float bArmor);
+float calcDamage(int aLv, float aAttack, float aPower, float bArmor);
 
 #endif //GAME_H

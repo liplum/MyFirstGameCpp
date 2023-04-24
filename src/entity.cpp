@@ -4,10 +4,10 @@
 
 #include "entity.h"
 
-Fighter *FighterInfo::create() {
+Fighter *FighterType::create() {
   return new Fighter{
     .name = this->name,
-    .info= this,
+    .type= this,
     .curHp = this->maxHp,
     .attack = this->attack,
     .armor = this->armor,

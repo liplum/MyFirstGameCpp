@@ -2,7 +2,10 @@
 // Created by Liplum on 4/23/2023.
 //
 
-#include <stdlib.h>
+#include <cstdlib>
+#include <iostream>
+
+using namespace std;
 
 void clearScreen() {
 #ifdef _WIN32
@@ -10,4 +13,8 @@ void clearScreen() {
 #else
   system("clear");
 #endif
+}
+
+void alert() {
+  cout << "\a";
 }

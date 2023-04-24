@@ -7,4 +7,6 @@
 
 void clearScreen();
 
+void alert();
+
 #endif //CONSOLE_H

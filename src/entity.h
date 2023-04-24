@@ -7,45 +7,37 @@
 #include <malloc.h>
 #include <string>
 
-using namespace std;
-
 class Fighter;
 
-class FighterInfo {
+class FighterType {
 public:
-  const string name;
+  const std::string name;
   float maxHp;
   float attack;
   float armor;
   int level;
+
   Fighter *create();
 };
 
 
-class Player : FighterInfo {
+class Player : public FighterType {
 public:
   int exp;
 };
 
-class Enemy : FighterInfo {
+class Enemy : public FighterType {
 public:
   int expReward;
 };
 
 class Fighter {
 public:
-  const string name;
-  FighterInfo* info;
+  const std::string name;
+  FighterType *type;
   float curHp;
   float attack;
   float armor;
 };
-
-
-typedef struct {
-  float hp;
-  float damage;
-  float armor;
-} Upgrade;
 
 #endif

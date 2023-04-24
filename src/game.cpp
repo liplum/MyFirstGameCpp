@@ -1,41 +1,46 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "cert-msc50-cpp"
 
-#include <stdio.h>
+#include <iostream>
 #include "console.h"
 #include "entity.h"
+#include "ui.h"
+#include "calculate.h"
 
 //
 // Created by Liplum on 4/23/2023.
 //
 int getChoice() {
   int choice;
-  printf("Attack=1, Parry=2, Withdraw=3\n");
-  printf("Your choice:");
-  scanf("%d", &choice);
+  cout << "Attack=1, Parry=2, Withdraw=3" << endl;
+  cout << "Your choice:";
+  cin >> choice;
   return choice;
 }
 
-void displayNewTurn(int turn, FighterObject *player, FighterObject *enemy) {
+const int healthBarWidth = 15;
+
+void displayHealthBar(Fighter *fighter) {
+  cout << fighter->type->name << " HP:" << endl;
+  cout << "\t|" << createHealthBar(fighter->curHp, fighter->type->maxHp, healthBarWidth) << "| "
+       << static_cast<int>(fighter->curHp) << endl;
+}
+
+void displayNewTurnBanner(Fighter *player, Fighter *enemy, int turn) {
   clearScreen();
-  printf("------------------------------------------------------------");
-  printf("\n[Turn %d]\n\n", turn);
-  printf("Your Hp is %d. The %s Hp is %d.\n", (int) player->curHp, enemy->name, (int) enemy->maxHp);
+  printf("------------------------------------------------------------\n");
+  cout << "[Turn " << turn << "]" << endl;
+  displayHealthBar(player);
+  displayHealthBar(enemy);
 }
 
-/// Return a random number between [0f,1f]
-float randf() {
-  return (float) rand() / (float) RAND_MAX;
-}
-
-/// Return a random number between [min,max]
-float randfIn(float min, float max) {
-  return randf() * max + min;
-}
-
-float calcDamage(int aLv, float aAttack, float bArmor) {
+float calcDamage(int aLv, float aAttack, float aPower, float bArmor) {
   float randomFactor = randfIn(0.85f, 1.0f);
-  return ((((((2 * (float) aLv) / 5 + 2) * aAttack / bArmor) / 50) + 2) * randomFactor) / 100;
+  bArmor = bArmor > 1 ? bArmor : 1;
+  float damageFactor = aAttack / bArmor;
+  float attackerLvFactor = 2 * (float) aLv / 5 + 2;
+  float damage = attackerLvFactor * aPower * damageFactor / 50;
+  return damage * randomFactor;
 }
 
 #pragma clang diagnostic pop
