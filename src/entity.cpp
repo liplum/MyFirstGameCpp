@@ -3,13 +3,19 @@
 //
 
 #include "entity.h"
+#include "game.h"
 
 Fighter *FighterType::create() {
   return new Fighter{
-    .name = this->name,
-    .type= this,
-    .curHp = this->maxHp,
-    .attack = this->attack,
-    .armor = this->armor,
+    .type= *this,
+    .curHp = this->getMaxHp(),
+    .attack = this->getAttack(),
+    .armor = this->getArmor(),
+    .attackPower = 100,
+    .defenseResistance = 0.5f,
   };
+}
+
+float Fighter::getAttackDamageTo(Fighter b, float powerMul) {
+  return calcDamage(this->type.getLevel(), this->attack, b.armor, this->attackPower * powerMul);
 }

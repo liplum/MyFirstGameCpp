@@ -88,8 +88,7 @@ public:
 
 class Fighter {
 public:
-  const std::string name;
-  FighterType *type;
+  FighterType &type;
   float curHp;
   float attack;
   float armor;
@@ -98,6 +97,10 @@ public:
    * If the speed is the same, one random player will be the first player.
    */
   float speed;
+  float attackPower;
+  float defenseResistance;
+
+  float getAttackDamageTo(Fighter b, float powerMul = 1.0f);
 };
 
 #endif

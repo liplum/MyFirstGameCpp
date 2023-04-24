@@ -9,8 +9,8 @@
 BattleResult slimeBattle();
 
 class SlimeLevel : public GameLevel {
-
-  void startBattle(const BattleContext& ctx) override;
+  void onEnter() override;
+  BattleResult startBattle(const BattleContext& ctx) override;
 };
 
 #endif //LEVEL_1_H

@@ -2,8 +2,7 @@
 // Created by Liplum on 4/24/2023.
 //
 
-#include <stdio.h>
-#include <stdbool.h>
+#include <cstdio>
 #include "../game.h"
 #include "../console.h"
 #include "level_1.h"
@@ -20,24 +19,17 @@ Enemy *createSlime() {
   return e;
 }
 
-void SlimeLevel::startBattle(const BattleContext &ctx) {
+void SlimeLevel::onEnter() {
+  printf("A slime is coming here...");
+  alert();
+  getchar();
+}
+
+BattleResult SlimeLevel::startBattle(const BattleContext &ctx) {
   auto enemySlime = *createSlime();
   auto player = *ctx.player.create();
   auto enemy = *enemySlime.create();
   int turn = 0;
-  printf("Press Enter to start.");
-  getchar();
-  printf("You were found in a forest.");
-  getchar();
-  printf("A slime is coming here...");
-  alert();
-  getchar();
-  printf("Start fighting!");
-  getchar();
-
-  printf("Your Hp is %d. Slime's is %d.", (int) player.curHp, (int) enemy.curHp);
-  getchar();
-
   while (true) {
     turn++;
     displayNewTurnBanner(player, enemy, turn);
@@ -45,9 +37,9 @@ void SlimeLevel::startBattle(const BattleContext &ctx) {
     printf("\n");
     switch (choice) {
       case Attack: {
-        float playerCaused = calcDamageFor(player, enemy, player->type->attackPower);
+        float playerCaused = player.getAttackDamageTo(enemy);
         enemy.curHp -= playerCaused;
-        float slimeCaused = calcDamageFor(enemy, player, enemy->type->attackPower);
+        float slimeCaused = enemy.getAttackDamageTo(player);
         player.curHp -= slimeCaused;
         if (enemy.curHp <= 0) { //Killed
           printf("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
@@ -55,7 +47,7 @@ void SlimeLevel::startBattle(const BattleContext &ctx) {
           printf("Congratulations! You won the fight.\n");
           return BattleWin;
         }
-        if (player->curHp <= 0) { //Failed
+        if (player.curHp <= 0) { //Failed
           printf("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
           printf("You slashed the enemy and cause %d damage!\n", (int) playerCaused);
           printf("Slime rushed swiftly and consumed you!\n");
@@ -71,10 +63,10 @@ void SlimeLevel::startBattle(const BattleContext &ctx) {
         continue;
       }
       case Parry: {
-        player->armor *= 2;
-        float slimeCaused = calcDamageFor(enemy, player, enemy->type->attackPower);
-        player->curHp -= slimeCaused;
-        if (player->curHp <= 0) {
+        player.armor *= 2;
+        float slimeCaused = enemy.getAttackDamageTo(player);
+        player.curHp -= slimeCaused;
+        if (player.curHp <= 0) {
           printf("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
           printf("You raised the shield and tried to defend.\n");
           printf("But enemy countered your defense...\n");
@@ -85,7 +77,7 @@ void SlimeLevel::startBattle(const BattleContext &ctx) {
         printf("Slime hit you and cause %d!\n", (int) slimeCaused);
         getchar();
         getchar();
-        player->armor = player->type->armor;
+        player.armor = player.type.getArmor();
         continue;
       }
       case Withdraw: {
@@ -93,9 +85,9 @@ void SlimeLevel::startBattle(const BattleContext &ctx) {
           return BattleEscape;
         }
         printf("Slime stuck your legs.\n");
-        float slimeCaused = calcDamageFor(enemy, player, enemy->type->attackPower * 1.5f);
-        player->curHp -= enemy->attack;
-        if (player->curHp <= 0) {
+        float slimeCaused = enemy.getAttackDamageTo(player, 1.5f);
+        player.curHp -= slimeCaused;
+        if (player.curHp <= 0) {
           printf("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
           printf("Slime caught you and consumed your body. How poor you are!\n");
           getchar();
@@ -108,6 +100,4 @@ void SlimeLevel::startBattle(const BattleContext &ctx) {
       }
     }
   }
-}
-
 }

@@ -29,7 +29,12 @@ int main(void) {
     &giantRatBattle,
     &goblinMageBattle
   };
-
+  printf("You were found in a forest.");
+  getchar();
+  printf("A slime is coming here...");
+  alert();
+  getchar();
+  printf("Start fighting!");
   for (int i = 0; i < LevelCount; ++i) {
     BattleResult result = levels[i]();
     switch (result) {

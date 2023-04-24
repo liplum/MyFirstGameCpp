@@ -28,14 +28,16 @@ void displayNewTurnBanner(Fighter &player, Fighter &enemy, int turn);
 
 float calcDamage(int aLv, float aAttack, float aPower, float bArmor);
 
-class BattleContext{
+class BattleContext {
 public:
-  Player& player;
+  Player &player;
 };
 
 class GameLevel {
 public:
-  virtual void startBattle(const BattleContext& ctx) = 0;
+  virtual void onEnter() = 0;
+
+  virtual BattleResult startBattle(const BattleContext &ctx) = 0;
 };
 
 #endif //GAME_H
