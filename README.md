@@ -1,12 +1,9 @@
-<div align="center">
-
 # My First Game Cpp
 
 [![Button Discord]][Discord]
 [![Buttons Download]][Download]
 
-#### *Rewrite my old time.*
-#### *by Liplum*
+#### *Rewrite my old time. by Liplum*
 
 ### Update History
 
@@ -15,7 +12,6 @@
 ### Tutorial
 
 [Clion with CMake](https://www.jetbrains.com/help/clion/quick-cmake-tutorial.html)
-</div>
 
 <!----------------------------------------------------------------------------->
 
