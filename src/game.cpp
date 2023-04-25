@@ -11,6 +11,7 @@
 #include "ui.h"
 #include "calculate.h"
 #include "game.h"
+#include <algorithm>
 
 using namespace std;
 
@@ -27,8 +28,8 @@ ActionType getActionChoice() {
 const int healthBarWidth = 15;
 
 void displayHealthBar(Fighter &fighter) {
-  cout << fighter.type->getName() << " HP:" << endl;
-  cout << "\t|" << createHealthBar(fighter.curHp, fighter.type->getMaxHp(), healthBarWidth) << "| "
+  cout << fighter.type.getName() << " HP:" << endl;
+  cout << "\t|" << createHealthBar(fighter.curHp, fighter.type.getMaxHp(), healthBarWidth) << "| "
        << static_cast<int>(fighter.curHp) << endl;
 }
 
@@ -42,7 +43,7 @@ void displayNewTurnBanner(Fighter &player, Fighter &enemy, int turn) {
 
 float calcDamage(int aLv, float aAttack, float aPower, float bArmor) {
   float randomFactor = randfIn(0.85f, 1.0f);
-  bArmor = bArmor > 1 ? bArmor : 1;
+  bArmor = max(bArmor, 1.0f);
   float damageFactor = aAttack / bArmor;
   float attackerLvFactor = 2 * (float) aLv / 5 + 2;
   float damage = attackerLvFactor * aPower * damageFactor / 50;

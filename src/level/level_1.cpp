@@ -25,7 +25,9 @@ void SlimeLevel::onEnter() {
   getchar();
 }
 
-BattleResult SlimeLevel::startBattle(const BattleContext &ctx) {
+const float escapeChance = 0.01f;
+
+BattleResult SlimeLevel::startBattle(const BattleContext &ctx) const {
   auto enemySlime = *createSlime();
   auto player = *ctx.player.create();
   auto enemy = *enemySlime.create();

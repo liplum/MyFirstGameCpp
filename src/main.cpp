@@ -2,41 +2,50 @@
 #pragma ide diagnostic ignored "cert-msc51-cpp"
 #pragma ide diagnostic ignored "cert-msc50-cpp"
 
-#include <stdio.h>
+#include <cstdio>
+#include <iostream>
 #include <stdlib.h>
 #include <time.h>
 #include "game.h"
 #include "console.h"
 #include "level/level_1.h"
-#include "level/level_2.h"
-#include "level/level_3.h"
+#include "vector"
 
-#define LevelCount 3
+using namespace std;
 
-int main(void) {
+Player *createPlayer() {
+  auto p = new Player;
+  p->name = "You";
+  p->maxHp = 130.0f;
+  p->attack = 10.0f;
+  p->armor = 4.0f;
+  p->level = 1;
+  return p;
+}
+
+int main() {
 #ifdef _WIN32
-  setvbuf(stdout, NULL, _IONBF, 0);
+  setvbuf(stdout, nullptr, _IONBF, 0);
 #endif
-  srand((unsigned) time(NULL));
+  srand((unsigned) time(nullptr));
   clearScreen();
   printf("\t\t**********************\n");
   printf("\t\t* First Game v1.5.0  *\n");
   printf("\t\t**********************\n");
   printf("\t\t\t\tLast Change: 4/24/2023    by Liplum\n");
 
-  const BattleRunner levels[LevelCount] = {
-    &slimeBattle,
-    &giantRatBattle,
-    &goblinMageBattle
+  auto levels = vector{
+    SlimeLevel()
   };
-  printf("You were found in a forest.");
+  cout << "You were found in a forest.";
   getchar();
   printf("A slime is coming here...");
   alert();
   getchar();
   printf("Start fighting!");
-  for (int i = 0; i < LevelCount; ++i) {
-    BattleResult result = levels[i]();
+  auto player = *createPlayer();
+  for (const auto &level: levels) {
+    BattleResult result = level.startBattle(BattleContext{.player = player});
     switch (result) {
       case BattleWin: {
         printf("Press Enter to continue...");
