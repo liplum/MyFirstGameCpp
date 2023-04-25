@@ -4,12 +4,11 @@
 
 #include <cstdio>
 #include <iostream>
-#include <stdlib.h>
-#include <time.h>
 #include "game.h"
 #include "console.h"
 #include "level/level_1.h"
 #include "vector"
+#include "ui.h"
 
 using namespace std;
 
@@ -29,53 +28,51 @@ int main() {
 #endif
   srand((unsigned) time(nullptr));
   clearScreen();
-  printf("\t\t**********************\n");
-  printf("\t\t* First Game v1.5.0  *\n");
-  printf("\t\t**********************\n");
-  printf("\t\t\t\tLast Change: 4/24/2023    by Liplum\n");
+  cout << ui::createBoard(vector<string>{
+    "My First Game Cpp v0.0.1",
+    "Last Change: 4/25/2023    by Liplum",
+  }) << endl;
 
   auto levels = vector{
     SlimeLevel()
   };
-  cout << "You were found in a forest.";
-  getchar();
-  printf("A slime is coming here...");
-  alert();
-  getchar();
-  printf("Start fighting!");
+  cout << "You were found in a forest." << endl;
   auto player = *createPlayer();
   for (const auto &level: levels) {
-    BattleResult result = level.startBattle(BattleContext{.player = player});
+    level.onEnter();
+    cout << "Start fighting!" << endl;
+    getchar();
+    auto result = level.startBattle(BattleContext{.player = player});
     switch (result) {
       case BattleWin: {
-        printf("Press Enter to continue...");
+        cout << "Press Enter to continue...";
         getchar();
         getchar();
         continue;
       }
       case BattleEscape: {
         getchar();
-        printf("*----*------*------*------*------*-------*\n");
-        printf("|       You Escaped from the Forest      |\n");
-        printf("|         That's the right way.          |\n");
-        printf("*-----*------*------*------*------*------*\n");
+        cout << ui::createBoard(vector<string>{
+          "You Escaped from the Forest",
+          "That's the right way.",
+        });
         return 0;
       }
       case BattleLoss: {
         getchar();
-        printf("*----*------*------*------*------*-------*\n");
-        printf("|             Game Over                  |\n");
-        printf("|       Don't be sad, just try again.    |\n");
-        printf("*-----*------*------*------*------*------*\n");
+        cout << ui::createBoard(vector<string>{
+          "Game Over",
+          "Don't be sad, just try again.",
+        }) << endl;
         return 0;
       }
     }
   }
 
-  printf("*----*------*------*------*------*------*------*------*------*------*\n");
-  printf("|              Congratulations! you passed the game.                |\n");
-  printf("|       Thank you for playing, please wait for my next work! UwU    |\n");
-  printf("*-----*------*------*------*------*------*------*------*------*-----*");
+  cout << ui::createBoard(vector<string>{
+    "Congratulations! you passed the game.",
+    "Thank you for playing, please wait for my next work! UwU",
+  }) << endl;
   return 0;
 }
 

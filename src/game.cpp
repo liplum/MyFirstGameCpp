@@ -29,7 +29,7 @@ const int healthBarWidth = 15;
 
 void displayHealthBar(Fighter &fighter) {
   cout << fighter.type.getName() << " HP:" << endl;
-  cout << "\t|" << createHealthBar(fighter.curHp, fighter.type.getMaxHp(), healthBarWidth) << "| "
+  cout << "\t|" << ui::createHealthBar(fighter.curHp, fighter.type.getMaxHp(), healthBarWidth) << "| "
        << static_cast<int>(fighter.curHp) << endl;
 }
 

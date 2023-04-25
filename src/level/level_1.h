@@ -6,11 +6,9 @@
 #ifndef LEVEL_1_H
 #define LEVEL_1_H
 
-BattleResult slimeBattle();
-
 class SlimeLevel : public GameLevel {
 public:
-  void onEnter() override;
+  void onEnter() const override;
   BattleResult startBattle(const BattleContext& ctx) const override;
 };
 

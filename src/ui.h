@@ -3,10 +3,15 @@
 //
 
 #include <string>
+#include <vector>
 
 #ifndef UI_H
 #define UI_H
+using namespace std;
 
-std::string createHealthBar(float curHp, float maxHp, int barWidth);
+namespace ui {
+  string createHealthBar(float curHp, float maxHp, int barWidth);
 
+  string createBoard(const vector<string> &lines);
+}
 #endif //UI_H

@@ -35,7 +35,7 @@ public:
 
 class GameLevel {
 public:
-  virtual void onEnter() = 0;
+  virtual void onEnter() const = 0;
 
   virtual BattleResult startBattle(const BattleContext &ctx) const = 0;
 };

@@ -3,10 +3,13 @@
 //
 
 #include <cstdio>
+#include <iostream>
 #include "../game.h"
 #include "../console.h"
 #include "level_1.h"
 #include "../calculate.h"
+
+using namespace std;
 
 Enemy *createSlime() {
   auto e = new Enemy;
@@ -19,8 +22,8 @@ Enemy *createSlime() {
   return e;
 }
 
-void SlimeLevel::onEnter() {
-  printf("A slime is coming here...");
+void SlimeLevel::onEnter() const {
+  cout << "A slime is coming here...";
   alert();
   getchar();
 }
