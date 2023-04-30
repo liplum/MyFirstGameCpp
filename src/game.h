@@ -22,7 +22,7 @@ typedef enum {
 
 ActionType getActionChoice();
 
-void displayHealthBar(Fighter *fighter);
+void displayHealthBar(Fighter &fighter);
 
 void displayNewTurnBanner(Fighter &player, Fighter &enemy, int turn);
 
