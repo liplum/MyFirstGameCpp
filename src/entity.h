@@ -10,6 +10,15 @@
 
 class Fighter;
 
+class Skill {
+public:
+  Fighter *self;
+  Fighter *target;
+
+  virtual void onTurnStart() {}
+};
+
+
 class FighterType {
 public:
   virtual std::string getName() = 0;
@@ -100,7 +109,7 @@ public:
   float attackPower;
   float defenseResistance;
 
-  float getAttackDamageTo(Fighter b, float powerMul = 1.0f);
+  float getAttackDamageTo(Fighter &b, float powerMul = 1.0f);
 };
 
 #endif

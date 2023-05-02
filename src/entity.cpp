@@ -16,6 +16,6 @@ Fighter *FighterType::create() {
   };
 }
 
-float Fighter::getAttackDamageTo(Fighter b, float powerMul) {
+float Fighter::getAttackDamageTo(Fighter& b, float powerMul) {
   return calcDamage(this->type.getLevel(), this->attack, this->attackPower * powerMul, b.armor);
 }
