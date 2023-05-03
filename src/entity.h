@@ -10,12 +10,35 @@
 
 class Fighter;
 
-class Skill {
-public:
+struct DamageSource {
   Fighter *self;
   Fighter *target;
-
   virtual void onTurnStart() {}
+
+  virtual void onPerform() {}
+
+  virtual void onTurnEnd() {}
+};
+
+struct Skill : public DamageSource {
+};
+
+class Effect : public DamageSource {
+
+};
+
+/**
+ * Amplifier types: Attack, Armor, Speed.
+ */
+struct Amplifier {
+  int attack = 0;
+  int armor = 0;
+  int speed = 0;
+};
+
+struct Damage {
+  DamageSource *source;
+
 };
 
 
