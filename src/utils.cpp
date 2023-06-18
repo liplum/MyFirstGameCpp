@@ -3,7 +3,7 @@
 //
 
 #include <cstdlib>
-#include "calculate.h"
+#include "utils.h"
 
 float randf() {
   return (float) rand() / (float) RAND_MAX;

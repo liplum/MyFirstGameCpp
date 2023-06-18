@@ -20,11 +20,6 @@ typedef enum {
   Withdraw = 3,
 } ActionType;
 
-ActionType getActionChoice();
-
-void displayHealthBar(Fighter &fighter);
-
-void displayNewTurnBanner(Fighter &player, Fighter &enemy, int turn);
 
 float calcDamage(int aLv, float aAttack, float aPower, float bArmor);
 

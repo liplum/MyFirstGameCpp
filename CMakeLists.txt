@@ -12,16 +12,10 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(nlohmann_json)
 
-FetchContent_Declare(
-        Catch2
-        GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-        GIT_TAG v3.3.2 # or a later release
-)
-
 add_executable(
         MyFirstGameCpp
         src/entity.h src/entity.cpp
-        src/calculate.h src/calculate.cpp
+        src/utils.h src/utils.cpp
         src/console.h src/console.cpp
         src/game.h src/game.cpp
         src/ui.h src/ui.cpp

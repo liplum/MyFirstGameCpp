@@ -3,11 +3,39 @@
 //
 
 #include "ui.h"
+#include "console.h"
 #include <string>
+#include <iostream>
 
 using namespace std;
 
 namespace ui {
+
+  const int healthBarWidth = 15;
+
+  void displayHealthBar(Fighter &fighter) {
+    cout << fighter.type.getName() << " HP:" << endl;
+    cout << "\t|" << ui::createHealthBar(fighter.curHp, fighter.type.getMaxHp(), healthBarWidth) << "| "
+         << static_cast<int>(fighter.curHp) << endl;
+  }
+
+  void displayNewTurnBanner(Fighter &player, Fighter &enemy, int turn) {
+    clearScreen();
+    printf("------------------------------------------------------------\n");
+    cout << "[Turn " << turn << "]" << endl;
+    displayHealthBar(player);
+    displayHealthBar(enemy);
+  }
+
+  ActionType getActionChoice() {
+    int choice = 0;
+    cout << "Attack=1, Parry=2, Withdraw=3" << endl;
+    while (choice != Attack && choice != Parry && choice != Withdraw) {
+      cout << "Your choice:";
+      cin >> choice;
+    }
+    return static_cast<ActionType>(choice);
+  }
 
 // Create a health bar string based on the current and maximum health points
   string createHealthBar(float curHp, float maxHp, int barWidth) {
@@ -31,7 +59,7 @@ namespace ui {
   string createBoard(const vector<string> &lines) {
     // Find the length of the longest line
     size_t maxLength = 0;
-    for (const auto& line : lines) {
+    for (const auto &line: lines) {
       maxLength = max(maxLength, line.length());
     }
 
@@ -40,14 +68,18 @@ namespace ui {
 
     // Build the contents of the box
     string contents;
-    for (const auto& line : lines) {
+    for (const auto &line: lines) {
       // Calculate the padding for this line
       size_t paddingSize = maxLength - line.length();
       string leftPadding = string(paddingSize / 2, ' ');
       string rightPadding = string(paddingSize - leftPadding.length(), ' ');
 
       // Build the centered line with padding and borders
-      string borderedLine = "* " + leftPadding + line + rightPadding + " *";
+      string borderedLine = "* ";
+      borderedLine += leftPadding;
+      borderedLine += line;
+      borderedLine += rightPadding;
+      borderedLine += " *";
 
       // Add the line to the contents
       contents += borderedLine + "\n";

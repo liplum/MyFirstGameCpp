@@ -7,7 +7,7 @@
 #include "../game.h"
 #include "../console.h"
 #include "level_1.h"
-#include "../calculate.h"
+#include "../utils.h"
 
 using namespace std;
 

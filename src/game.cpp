@@ -9,37 +9,11 @@
 #include "console.h"
 #include "entity.h"
 #include "ui.h"
-#include "calculate.h"
+#include "utils.h"
 #include "game.h"
 #include <algorithm>
 
 using namespace std;
-
-ActionType getActionChoice() {
-  int choice = 0;
-  cout << "Attack=1, Parry=2, Withdraw=3" << endl;
-  while (choice != Attack && choice != Parry && choice != Withdraw) {
-    cout << "Your choice:";
-    cin >> choice;
-  }
-  return static_cast<ActionType>(choice);
-}
-
-const int healthBarWidth = 15;
-
-void displayHealthBar(Fighter &fighter) {
-  cout << fighter.type.getName() << " HP:" << endl;
-  cout << "\t|" << ui::createHealthBar(fighter.curHp, fighter.type.getMaxHp(), healthBarWidth) << "| "
-       << static_cast<int>(fighter.curHp) << endl;
-}
-
-void displayNewTurnBanner(Fighter &player, Fighter &enemy, int turn) {
-  clearScreen();
-  printf("------------------------------------------------------------\n");
-  cout << "[Turn " << turn << "]" << endl;
-  displayHealthBar(player);
-  displayHealthBar(enemy);
-}
 
 float calcDamage(int aLv, float aAttack, float aPower, float bArmor) {
   float randomFactor = randfIn(0.85f, 1.0f);
